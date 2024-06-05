@@ -1,0 +1,5 @@
+1,John Doe,Dr. Smith,Special,3,50.0
+2,Jane Roe,Dr. Johnson,Standard,5,75.5
+3,Emily Davis,Dr. Brown,Special,2,100.0
+4,Michael Wilson,Dr. Taylor,Standard,4,65.0
+5,Anna Scott,Dr. Anderson,Special,1,80.0
