@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 #define line_size 256
 #include<stdio.h>
@@ -123,6 +124,24 @@ void changeDiscount(Node* list, char* name, float perc) {
 	}
 }
 
+void freeReteta(Reteta* r)
+{
+	free(r->patientName);
+	free(r->doctorName);
+	free(r->specialStatus);
+
+}
+
+void freeList(Node** list) {
+	while (*list)
+	{
+		Node* freeMe = *list;
+		*list = (*list)->next;
+		freeReteta(freeMe->info);
+		free(freeMe);
+	}
+}
+
 int main() {
 	FILE* fp = fopen("Data.txt", "r");
 	if (fp == NULL) return -1;
@@ -164,7 +183,7 @@ int main() {
 
 		Node* n = createNode(r);
 		addToListPosition(&list, n, 1);
-		
+
 	}
 
 	char name[] = "Jane Roe";
@@ -174,7 +193,10 @@ int main() {
 	int prag = 2;
 	int nrRet = nrRetete(list, prag);
 	//printf("Nr: %d", nrRet);
-	
+
 	printList(list);
+	freeList(&list);
+	free(tok);
+	fclose(fp);
 	return 0;
 }
