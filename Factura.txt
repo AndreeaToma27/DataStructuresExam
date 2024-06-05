@@ -1,0 +1,10 @@
+Implementați o aplicație în limbajul C ce rezolvă probleme de gestionare a facturilor emise de o firmă de curierat.
+  1. Definiți structura Factura ce conţine: număr factură (unsigned int), dată emitere (char*), beneficiar (char*), sumă de plată (float), număr zile scadență (unsigned int).
+Creați o listă dublă cu cel puțin 5 facturi ale căror date sunt preluate dintr-un fișier text. Creare structurii se realizează prin apel repetat al unei funcții de inserare, 
+iar verificarea creării cu succes se face prin traversarea listei în ambele sensuri. (1 p)
+  2. Implementați funcția care determină valoarea totală a facturilor emise către un anumit beneficiar, specificat ca parametru de intrare al funcției. 
+Funcția implementată se apelează în funcția main(), iar rezultatul apelului se afișează în consola de execuție a aplicației. (1 p)
+  3. Implementați funcția care modifică suma de plată aferentă unei facturi specificată prin număr factură în lista de parametri ai funcției. 
+Noua sumă de plată este specificată, de asemenea, în lista de parametri ai funcției. Funcția implementată se apelează în funcția main(), iar rezultatul apelului se afișează în consola de execuție a aplicației. (1 p)
+  4. Implementați funcția care șterge facturile din lista dublă pentru care numărul de zile până la scadență este mai mic decât un prag specificat ca parametru.
+Funcția implementată se apelează în funcția main(), iar rezultatul apelului se afișează în consola de execuție a aplicației. (1,5 p)
