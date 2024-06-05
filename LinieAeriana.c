@@ -23,6 +23,8 @@ Flight* createFlight(unsigned int id, char* destination, char* date, unsigned sh
 void printFlight(Flight* f);
 Node* createNode(Flight* f);
 void addToList(Node** list, Node* node);
+void printList(Node* list);
+int totalIntarziere(Node* list, char* destinatie);
 
 int main() {
 	char del[] = ",\n";
@@ -34,6 +36,8 @@ int main() {
 	char* date;
 	unsigned short int delay;
 	int passengers;
+
+	Node* list = NULL;
 
 	FILE* fp = fopen("Data.txt", "r");
 	if (fp == NULL) return -1;
@@ -56,29 +60,73 @@ int main() {
 		passengers = atoi(tok);
 
 		Flight* f = createFlight(id, destination, date, delay, passengers);
-		printFlight(f);
+		Node* n = createNode(f);
+		addToList(&list, n);
 	}
+	//2
+	//printList(list);
 
-
+	//3
+	char dest[] = "Malaga";
+	int total = totalIntarziere(list, dest);
+	printf("%d", total);
+	
+	//4
+	float media = medieCalatori(list, dest);
+	printf("\nTotal: %.2f", media);
 	return 0;
 }
 
-Flight* createFlight(unsigned int id, char* destination, char* date, unsigned short int delay, int passengers ) {
+float medieCalatori(Node* list, char* destinatie) {
+	int count = 0;
+	int total = 0;
+	float media = 0;
+	while (list->next != NULL) {
+		if (strcmp(list->info->destination, destinatie) == 0) {
+			total += list->info->passengers;
+			count++;
+		}
+		list = list->next;
+	}
+	if (strcmp(list->info->destination, destinatie) == 0) {
+		total += list->info->passengers;
+		count++;
+	}
+
+	
+	return (total/count);
+}
+
+int totalIntarziere(Node* list, char* destinatie) {
+	int total = 0;
+	while (list->next != NULL) {
+		if (strcmp(list->info->destination, destinatie) == 0) {
+			total += list->info->delay;
+		}
+		list = list->next;
+	}
+	if (strcmp(list->info->destination, destinatie) == 0) {
+		total += list->info->delay;
+	}
+	return total;
+}
+
+Flight* createFlight(unsigned int id, char* destination, char* date, unsigned short int delay, int passengers) {
 	Flight* f = (Flight*)malloc(sizeof(Flight));
-	
-		f->id = id;
-		f->destination = (char*)malloc(strlen(destination) + 1);
-		strcpy(f->destination, destination);
-		f->date = (char*)malloc(strlen(date) + 1);
-		strcpy(f->date, date);
-		f->delay = delay;
-		f->passengers = passengers;
-	
+
+	f->id = id;
+	f->destination = (char*)malloc(strlen(destination) + 1);
+	strcpy(f->destination, destination);
+	f->date = (char*)malloc(strlen(date) + 1);
+	strcpy(f->date, date);
+	f->delay = delay;
+	f->passengers = passengers;
+
 	return f;
 }
 
 void printFlight(Flight* f) {
-	printf("\nFlight %i: Destinantion: %c, Date: %c, Delay: %i, No of passengers: %d",
+	printf("\nFlight %i: Destinantion: %s, Date: %s, Delay: %i, No of passengers: %d",
 		f->id, f->destination, f->date, f->delay, f->passengers);
 }
 
@@ -93,14 +141,25 @@ Node* createNode(Flight* f) {
 }
 
 void addToList(Node** list, Node* node) {
-	if ((*list) == NULL) {
+	if (*list == NULL) {
 		*list = node;
 	}
-	Node* tmp = *list;
-	while (tmp->next != NULL) {
-		tmp = tmp->next;
+	else {
+		Node* tmp = *list;
+		while (tmp->next != NULL) {
+			tmp = tmp->next;
+		}
+		tmp->next = node;
+		node->prev = tmp;
+		return *list;
 	}
-	tmp->next = node;
-	node->prev = tmp;
-	return *list;
+}
+
+void printList(Node* list) {
+	while (list->next != NULL) {
+		printFlight(list->info);
+		list = list->next;
+	}
+	printFlight(list->info);
+	
 }
